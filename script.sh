@@ -40,76 +40,76 @@ createComment() {
 }
 
 # Function to update a comment
-updateComment() {
-  if [ -z "$commentId" ] || [ -z "$body" ]; then
-    echo "Comment ID and comment body are required."
-    return
-  fi
+# updateComment() {
+#   if [ -z "$commentId" ] || [ -z "$body" ]; then
+#     echo "Comment ID and comment body are required."
+#     return
+#   fi
 
-  # Get existing comment
-  comment=$(curl -s -H "Authorization: token $token" \
-    "https://api.github.com/repos/$owner/$repo/issues/comments/$commentId")
+#   # Get existing comment
+#   comment=$(curl -s -H "Authorization: token $token" \
+#     "https://api.github.com/repos/$owner/$repo/issues/comments/$commentId")
 
-  if [ "$actionType" == "append" ]; then
-    newComment=$(echo -e "${comment['body']}\n$body")
-  elif [ "$actionType" == "prepend" ]; then
-    newComment=$(echo -e "$body\n${comment['body']}")
-  else
-    newComment=$body
-  fi
+#   if [ "$actionType" == "append" ]; then
+#     newComment=$(echo -e "${comment['body']}\n$body")
+#   elif [ "$actionType" == "prepend" ]; then
+#     newComment=$(echo -e "$body\n${comment['body']}")
+#   else
+#     newComment=$body
+#   fi
 
-  # Update the comment
-  comment=$(curl -s -H "Authorization: token $token" \
-    -X PATCH -d "{\"body\": \"$newComment\"}" \
-    "https://api.github.com/repos/$owner/$repo/issues/comments/$commentId")
+#   # Update the comment
+#   comment=$(curl -s -H "Authorization: token $token" \
+#     -X PATCH -d "{\"body\": \"$newComment\"}" \
+#     "https://api.github.com/repos/$owner/$repo/issues/comments/$commentId")
 
-  commentId=$(echo "$comment" | jq -r '.id')
-  echo "Comment is modified. Comment ID: $commentId"
+#   commentId=$(echo "$comment" | jq -r '.id')
+#   echo "Comment is modified. Comment ID: $commentId"
 
-  addReactions
-}
+#   addReactions
+# }
 
 # Function to find a comment
-findComment() {
-  if [ -z "$issueNumber" ]; then
-    echo "Issue number is required."
-    return
-  fi
+# findComment() {
+#   if [ -z "$issueNumber" ]; then
+#     echo "Issue number is required."
+#     return
+#   fi
 
-  if [ -z "$searchTerm" ] && [ -z "$author" ]; then
-    echo "Either search term or comment author is required."
-    return
-  fi
+#   if [ -z "$searchTerm" ] && [ -z "$author" ]; then
+#     echo "Either search term or comment author is required."
+#     return
+#   fi
 
-  if [ "$direction" == "older" ]; then
-    # Loop through older comments
-    # Add your command to search here
-  else
-    # Find a newer comment
-    # Add your command to search here
-  fi
+#   if [ "$direction" == "older" ]; then
+#     # Loop through older comments
+#     # Add your command to search here
+#   else
+#     # Find a newer comment
+#     # Add your command to search here
+#   fi
 
-  if [ -n "$foundComment" ]; then
-    echo "Comment found for a search term: '$searchTerm'."
-    echo "Comment ID: '$foundComment'"
-  else
-    echo "Comment not found."
-  fi
-}
+#   if [ -n "$foundComment" ]; then
+#     echo "Comment found for a search term: '$searchTerm'."
+#     echo "Comment ID: '$foundComment'"
+#   else
+#     echo "Comment not found."
+#   fi
+# }
 
 # Function to delete a comment
-deleteComment() {
-  if [ -z "$commentId" ]; then
-    echo "Comment ID is required."
-    return
-  fi
+# deleteComment() {
+#   if [ -z "$commentId" ]; then
+#     echo "Comment ID is required."
+#     return
+#   fi
 
-  # Delete the comment
-  curl -s -H "Authorization: token $token" \
-    -X DELETE "https://api.github.com/repos/$owner/$repo/issues/comments/$commentId"
+#   # Delete the comment
+#   curl -s -H "Authorization: token $token" \
+#     -X DELETE "https://api.github.com/repos/$owner/$repo/issues/comments/$commentId"
 
-  echo "Deleted a comment. Comment ID: $commentId"
-}
+#   echo "Deleted a comment. Comment ID: $commentId"
+# }
 
 # Main script
 token=$1
