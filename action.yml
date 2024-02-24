@@ -50,17 +50,17 @@ runs:
   steps:
     - name: Doing commenting
       env:
-        token=${{ inputs.token }}
-        owner=${{ inputs.store-name }}
-        repo=${{ inputs.repo }}
-        actionType=${{ inputs.actionType }}
-        body=${{ inputs.body }}
-        issueNumber=${{ inputs.issueNumber }}
-        commentId=${{ inputs.commentId }}
-        searchTerm=${{ inputs.searchTerm }}
-        author=${{ inputs.author }}
-        direction=${{ inputs.direction }}
-        reactions=${{ inputs.reactions }}
+        token: ${{ inputs.token }}
+        owner: ${{ inputs.store-name }}
+        repo: ${{ inputs.repo }}
+        actionType: ${{ inputs.actionType }}
+        body: ${{ inputs.body }}
+        issueNumber: ${{ inputs.issueNumber }}
+        commentId: ${{ inputs.commentId }}
+        searchTerm: ${{ inputs.searchTerm }}
+        author: ${{ inputs.author }}
+        direction: ${{ inputs.direction }}
+        reactions: ${{ inputs.reactions }}
       run: |
         ${{ github.action_path }}/script.sh 
       shell: bash
