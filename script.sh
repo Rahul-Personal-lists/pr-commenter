@@ -117,7 +117,9 @@ createComment() {
 
 allowedReactions=("\\+1" "-1" "laugh" "hooray" "confused" "heart" "rocket" "eyes")
 
-echo "$actionType=${actionType}"
+echo "actionType=${actionType}"
+echo "issueNumber=${$issueNumber}"
+
 case $actionType in
   "create")
     createComment ;;
