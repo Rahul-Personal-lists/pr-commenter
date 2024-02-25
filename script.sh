@@ -109,15 +109,17 @@ comments=$(curl -L \
   -H "Accept: application/vnd.github+json" \
   -H "Authorization: Bearer $GH_TOKEN" \
   -H "X-GitHub-Api-Version: 2022-11-28" \
-  https://api.github.com/repos/Rahul-Personal-lists/copy-giftree/pulls/comments)
+  https://api.github.com/repos/Rahul-Personal-lists/copy-giftree/pulls)
 
 #$(curl -s -H "Authorization: token $GH_TOKEN" "https://api.github.com/repos/$owner/copy-giftree/issues/$issueNumber/comments")
 echo "commentssssss=$comments"
-comment=$(echo "$comments" | jq -r '.[] | select('\
-  "(\"$searchTerm\" | length > 0 and .body | index(\"$searchTerm\") >= 0) or " \
-  "(\"$author\" | length > 0 and .user.login == \"$author\")" \
-')')
-echo "commentssssss=$comment"
+
+
+# comment=$(echo "$comments" | jq -r '.[] | select('\
+#   "(\"$searchTerm\" | length > 0 and .body | index(\"$searchTerm\") >= 0) or " \
+#   "(\"$author\" | length > 0 and .user.login == \"$author\")" \
+# ')')
+
 if [ -n "$comment" ]; then
   commentId=$(echo "$comment" | jq -r '.id')
   echo "Comment found for a search term: '$searchTerm'."
