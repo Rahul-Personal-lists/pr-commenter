@@ -33,7 +33,7 @@ createComment() {
   
   echo "Created a comment on issue number: $issueNumber"
   echo "Create comment=$comment"
-  commentId=$(echo "$comment" | jq -r '.id')
+  commentId=$(echo "$comment" | awk -F'/' '{print $(NF-1)}')
   echo "Comment is modified. Comment ID: $commentId"
 
   addReactions
