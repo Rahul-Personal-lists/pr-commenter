@@ -55,7 +55,7 @@ fi
 #Function to delete a comment
 deleteComment() {
   echo "hello delete"
-  if [ -z "$commentId" ]; then
+  if [ -z "$comment_Id" ]; then
     echo "Comment ID is required."
     return
   fi
@@ -65,9 +65,9 @@ deleteComment() {
   --method DELETE \
   -H "Accept: application/vnd.github+json" \
   -H "X-GitHub-Api-Version: 2022-11-28" \
-  /repos/$repo/pulls/comments/$commentId
+  /repos/$repo/pulls/comments/$comment_Id
   
-  echo "Deleted a comment. Comment ID: $commentId"
+  echo "Deleted a comment. Comment ID: $comment_Id"
 }
 
 # Debug statement
