@@ -29,7 +29,7 @@ createComment() {
 
   # Create a comment
 
-  gh pr comment $issueNumber --body $body
+  gh pr comment 10 --body "test"
 
   # comment=$(curl -s -H "Authorization: token $token" \
   #   -X POST -d "{\"body\": \"$body\"}" \
