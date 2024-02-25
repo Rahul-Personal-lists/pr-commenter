@@ -71,32 +71,24 @@ createComment() {
 # }
 
 # Function to find a comment
-# findComment() {
-#   if [ -z "$issueNumber" ]; then
-#     echo "Issue number is required."
-#     return
-#   fi
+findComment() {
+  if [ -z "$issueNumber" ]; then
+    echo "Issue number is required."
+    return
+  fi
 
-#   if [ -z "$searchTerm" ] && [ -z "$author" ]; then
-#     echo "Either search term or comment author is required."
-#     return
-#   fi
+  if [ -z "$searchTerm" ] && [ -z "$author" ]; then
+    echo "Either search term or comment author is required."
+    return
+  fi
 
-#   if [ "$direction" == "older" ]; then
-#     # Loop through older comments
-#     # Add your command to search here
-#   else
-#     # Find a newer comment
-#     # Add your command to search here
-#   fi
-
-#   if [ -n "$foundComment" ]; then
-#     echo "Comment found for a search term: '$searchTerm'."
-#     echo "Comment ID: '$foundComment'"
-#   else
-#     echo "Comment not found."
-#   fi
-# }
+  if [ -n "$foundComment" ]; then
+    echo "Comment found for a search term: '$searchTerm'."
+    echo "Comment ID: '$foundComment'"
+  else
+    echo "Comment not found."
+  fi
+}
 
 # Function to delete a comment
 # deleteComment() {

@@ -29,10 +29,6 @@ inputs:
   search_term:
     description: 'Search term, which is included in the comment body.'
     required: false
-  direction:
-    description: 'older - To find an older comment. newer - To find a newer comment.'
-    default: older
-    required: false
   # Reactions
   reactions:
     description: 'Add comma separated list of reactions to react on the comment.'
@@ -58,7 +54,6 @@ runs:
         commentId: ${{ inputs.comment_id }}
         searchTerm: ${{ inputs.search_term }}
         author: ${{ inputs.author }}
-        direction: ${{ inputs.direction }}
         reactions: ${{ inputs.reactions }}
       run: |
         ${{ github.action_path }}/script.sh 
