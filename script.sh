@@ -1,26 +1,7 @@
 #!/bin/bash
 # https://docs.github.com/en/rest/pulls/comments?apiVersion=2022-11-28
 
-commentId=''
-# Function to add reactions
-addReactions() {
-  if [ -z "$reactions" ]; then
-    return
-  fi
-
-  IFS=',' read -ra reactionsArray <<< "$reactions"
-  for reaction in "${reactionsArray[@]}"; do
-    # Validate reaction
-    if [[ ! " ${allowedReactions[@]} " =~ " $reaction " ]]; then
-      echo "Invalid reaction: '$reaction'"
-      continue
-    fi
-
-    # React on a comment
-    echo "Reacted '$reaction' on a comment."
-    # Add your command to react here
-  done
-}
+commentId=
 
 # Function to create a comment
 createComment() {
@@ -90,8 +71,6 @@ deleteComment() {
 }
 
 
-allowedReactions=("\\+1" "-1" "laugh" "hooray" "confused" "heart" "rocket" "eyes")
-
 case $actionType in
   "create")
     createComment ;;
@@ -104,9 +83,6 @@ case $actionType in
   *)
     echo "Invalid action type: $actionType" ;;
 esac
-
-echo "comment_id: $commentId"
-echo "comment_body: $commentBody"
 
 # These outputs are used in other steps/jobs via action.yml
 echo "comment_id=${commentId}" >> $GITHUB_OUTPUT
