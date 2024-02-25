@@ -51,12 +51,12 @@ runs:
     - name: Doing commenting
       env:
         token: ${{ inputs.token }}
-        owner: ${{ inputs.store-name }}
-        repo: ${{ inputs.repo }}
+        owner: "Rahul-Personal-lists"
+        repo: ${{ inputs.repository }}
         actionType: ${{ inputs.type }}
         body: ${{ inputs.body }}
-        issueNumber: ${{ inputs.issueNumber }}
-        commentId: ${{ inputs.commentId }}
+        issueNumber: ${{ inputs.number }}
+        commentId: ${{ inputs.comment_id }}
         searchTerm: ${{ inputs.search_term }}
         author: ${{ inputs.author }}
         direction: ${{ inputs.direction }}
