@@ -82,7 +82,7 @@ findComment() {
     return
   fi
 
-  foundComment = gh issue status "$issueNumber"
+  foundComment=gh issue status "$issueNumber"
 
   if [ -n "$foundComment" ]; then
     echo "Comment found for a search term: '$searchTerm'."
