@@ -53,7 +53,7 @@ runs:
         actionType: ${{ inputs.type }}
         body: ${{ inputs.body }}
         issueNumber: ${{ inputs.number }}
-        commentId: ${{ inputs.comment_id }}
+        comment_Id: ${{ inputs.comment_id }}
         searchTerm: ${{ inputs.search_term }}
         author: ${{ inputs.author }}
         reactions: ${{ inputs.reactions }}
