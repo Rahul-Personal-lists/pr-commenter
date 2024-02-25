@@ -52,7 +52,7 @@ fi
 
 }
 
-Function to delete a comment
+#Function to delete a comment
 deleteComment() {
   echo "hello delete"
   if [ -z "$commentId" ]; then
