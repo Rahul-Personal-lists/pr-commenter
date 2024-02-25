@@ -28,9 +28,12 @@ createComment() {
   fi
 
   # Create a comment
-  comment=$(curl -s -H "Authorization: token $token" \
-    -X POST -d "{\"body\": \"$body\"}" \
-    "https://api.github.com/repos/$owner/$repo/issues/$issueNumber/comments")
+
+  gh pr comment $issueNumber --body $body
+
+  # comment=$(curl -s -H "Authorization: token $token" \
+  #   -X POST -d "{\"body\": \"$body\"}" \
+  #   "https://api.github.com/repos/$owner/$repo/issues/$issueNumber/comments")
 
   commentId=$(echo "$comment" | jq -r '.id')
   echo "Created a comment on issue number: $issueNumber"
