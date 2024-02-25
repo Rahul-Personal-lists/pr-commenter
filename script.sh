@@ -111,6 +111,7 @@ createComment() {
 #   echo "Deleted a comment. Comment ID: $commentId"
 # }
 
+
 allowedReactions=("\\+1" "-1" "laugh" "hooray" "confused" "heart" "rocket" "eyes")
 
 case $actionType in
