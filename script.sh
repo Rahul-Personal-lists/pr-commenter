@@ -69,23 +69,25 @@ if [ -n "$comment_body" ]; then
   echo "Comment ID: '$commentId'."
 fi
 
-commentId
-
 }
 
-# Function to delete a comment
-# deleteComment() {
-#   if [ -z "$commentId" ]; then
-#     echo "Comment ID is required."
-#     return
-#   fi
+Function to delete a comment
+deleteComment() {
+  echo "hello delete"
+  if [ -z "$commentId" ]; then
+    echo "Comment ID is required."
+    return
+  fi
 
-#   # Delete the comment
-#   curl -s -H "Authorization: token $token" \
-#     -X DELETE "https://api.github.com/repos/$owner/$repo/issues/comments/$commentId"
-
-#   echo "Deleted a comment. Comment ID: $commentId"
-# }
+  # Delete the comment
+ gh api \
+  --method DELETE \
+  -H "Accept: application/vnd.github+json" \
+  -H "X-GitHub-Api-Version: 2022-11-28" \
+  /repos/$repo/pulls/comments/$commentId
+  
+  echo "Deleted a comment. Comment ID: $commentId"
+}
 
 
 allowedReactions=("\\+1" "-1" "laugh" "hooray" "confused" "heart" "rocket" "eyes")
