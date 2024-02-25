@@ -108,9 +108,9 @@ comments=$(gh api \
 
 echo "commentssssss=$comments"
 
-commnet_body=$(echo "$comment" | jq -r '.[0].body')
+comment_body=$(echo "$comments" | jq -r '.[0].body')
 
-echo "CommentBody: $commnet_body"
+echo "CommentBody: $comment_body"
 
 
 # comment=$(echo "$comments" | jq -r '.[] | select('\
