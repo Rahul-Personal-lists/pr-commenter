@@ -3,8 +3,7 @@ description: 'Create, update, append, prepend, delete or find a pull request or 
 inputs:
   token:
     description: 'GitHub token'
-    default: ${{ github.token }}
-    required: false
+    required: true
   repository:
     description: 'The GitHub repository'
     default: ${{ github.repository }}
@@ -50,7 +49,7 @@ runs:
   steps:
     - name: Doing commenting
       env:
-        token: ${{ inputs.token }}
+        GH_TOKEN: ${{ github.token }}
         owner: "Rahul-Personal-lists"
         repo: ${{ inputs.repository }}
         actionType: ${{ inputs.type }}
