@@ -82,7 +82,12 @@ findComment() {
     return
   fi
 
+echo "owner=$owner"
+echo "repo=$repo"
+echo "commentId=$commentId"
+
 foundComment=$(gh api "/repos/$owner/$repo/issues/comments/$commentId" -H "Authorization: token $GH_TOKEN")
+echo "Comment ID: '$foundComment'"
 
   if [ -n "$foundComment" ]; then
     echo "Comment found for a search term: '$searchTerm'."
