@@ -39,35 +39,35 @@ createComment() {
   addReactions
 }
 
-Function to update a comment
-updateComment() {
-  if [ -z "$commentId" ] || [ -z "$body" ]; then
-    echo "Comment ID and comment body are required."
-    return
-  fi
+# Function to update a comment
+# updateComment() {
+#   if [ -z "$commentId" ] || [ -z "$body" ]; then
+#     echo "Comment ID and comment body are required."
+#     return
+#   fi
 
-  # Get existing comment
-  comment=$(curl -s -H "Authorization: token $token" \
-    "https://api.github.com/repos/$owner/$repo/issues/comments/$commentId")
+#   # Get existing comment
+#   comment=$(curl -s -H "Authorization: token $token" \
+#     "https://api.github.com/repos/$owner/$repo/issues/comments/$commentId")
 
-  if [ "$actionType" == "append" ]; then
-    newComment=$(echo -e "${comment['body']}\n$body")
-  elif [ "$actionType" == "prepend" ]; then
-    newComment=$(echo -e "$body\n${comment['body']}")
-  else
-    newComment=$body
-  fi
+#   if [ "$actionType" == "append" ]; then
+#     newComment=$(echo -e "${comment['body']}\n$body")
+#   elif [ "$actionType" == "prepend" ]; then
+#     newComment=$(echo -e "$body\n${comment['body']}")
+#   else
+#     newComment=$body
+#   fi
 
-  # Update the comment
-  comment=$(curl -s -H "Authorization: token $token" \
-    -X PATCH -d "{\"body\": \"$newComment\"}" \
-    "https://api.github.com/repos/$owner/$repo/issues/comments/$commentId")
+#   # Update the comment
+#   comment=$(curl -s -H "Authorization: token $token" \
+#     -X PATCH -d "{\"body\": \"$newComment\"}" \
+#     "https://api.github.com/repos/$owner/$repo/issues/comments/$commentId")
 
-  commentId=$(echo "$comment" | jq -r '.id')
-  echo "Comment is modified. Comment ID: $commentId"
+#   commentId=$(echo "$comment" | jq -r '.id')
+#   echo "Comment is modified. Comment ID: $commentId"
 
-  addReactions
-}
+#   addReactions
+# }
 
 # Function to find a comment
 # findComment() {
