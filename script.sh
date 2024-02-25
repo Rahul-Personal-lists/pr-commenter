@@ -30,15 +30,8 @@ createComment() {
   # Create a comment
 
   gh pr comment $issueNumber --body "$body"
-  #gh pr comment 10 --body "Hi from GitHub CLI"
-
-  # comment=$(curl -s -H "Authorization: token $token" \
-  #   -X POST -d "{\"body\": \"$body\"}" \
-  #   "https://api.github.com/repos/$owner/$repo/issues/$issueNumber/comments")
-
-  commentId=$(echo "$comment" | jq -r '.id')
+  
   echo "Created a comment on issue number: $issueNumber"
-  echo "Comment ID: $commentId"
 
   addReactions
 }
