@@ -102,6 +102,7 @@ echo "issueNumber=$issueNumber"
   #   done
   # else
 comments=$(curl -s -H "Authorization: token $token" "https://api.github.com/repos/$owner/$repo/issues/$issueNumber/comments")
+echo "commentssssss=$comment"
 comment=$(echo "$comments" | jq -r '.[] | select('\
   "(\"$searchTerm\" | length > 0 and .body | index(\"$searchTerm\") >= 0) or " \
   "(\"$author\" | length > 0 and .user.login == \"$author\")" \
