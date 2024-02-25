@@ -111,19 +111,6 @@ createComment() {
 #   echo "Deleted a comment. Comment ID: $commentId"
 # }
 
-# Main script
-token=$1
-owner=$2
-repo=$3
-actionType=$4
-body=$5
-issueNumber=$6
-commentId=$7
-searchTerm=$8
-author=$9
-direction=${10}
-reactions=${11}
-
 allowedReactions=("\\+1" "-1" "laugh" "hooray" "confused" "heart" "rocket" "eyes")
 
 case $actionType in
