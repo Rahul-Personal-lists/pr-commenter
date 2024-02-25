@@ -85,16 +85,34 @@ findComment() {
 echo "owner=$owner"
 echo "repo=$repo"
 echo "commentId=$commentId"
+echo "issueNumber=$issueNumber"
+#foundComment=$(gh api "/repos/$owner/$repo/issues/comments/$commentId" -H "Authorization: token $GH_TOKEN")
+  # if [ "$direction" == "older" ]; then
+  #   comments=$(curl -s -H "Authorization: token $token" "https://api.github.com/repos/$owner/$repo/issues/$issueNumber/comments")
 
-foundComment=$(gh api "/repos/$owner/$repo/issues/comments/$commentId" -H "Authorization: token $GH_TOKEN")
-echo "Comment ID: '$foundComment'"
+  #   for comment in $(echo "$comments" | jq -c '.[]'); do
+  #     if [ -z "$searchTerm" ] || [ "$(echo "$comment" | jq -r '.body' | grep -E "$searchTerm")" ]; then
+  #       if [ -z "$author" ] || [ "$(echo "$comment" | jq -r '.user.login')" == "$author" ]; then
+  #         commentId=$(echo "$comment" | jq -r '.id')
+  #         echo "Comment found for a search term: '$searchTerm'."
+  #         echo "Comment ID: '$commentId'."
+  #         return
+  #       fi
+  #     fi
+  #   done
+  # else
+comments=$(curl -s -H "Authorization: token $token" "https://api.github.com/repos/$owner/$repo/issues/$issueNumber/comments")
+comment=$(echo "$comments" | jq -r '.[] | select('\
+  "(\"$searchTerm\" | length > 0 and .body | index(\"$searchTerm\") >= 0) or " \
+  "(\"$author\" | length > 0 and .user.login == \"$author\")" \
+')')
+echo "commentssssss=$comment"
+if [ -n "$comment" ]; then
+  commentId=$(echo "$comment" | jq -r '.id')
+  echo "Comment found for a search term: '$searchTerm'."
+  echo "Comment ID: '$commentId'."
+fi
 
-  if [ -n "$foundComment" ]; then
-    echo "Comment found for a search term: '$searchTerm'."
-    echo "Comment ID: '$foundComment'"
-  else
-    echo "Comment not found."
-  fi
 }
 
 # Function to delete a comment
