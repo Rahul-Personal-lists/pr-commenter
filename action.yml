@@ -53,7 +53,7 @@ runs:
         token: ${{ inputs.token }}
         owner: ${{ inputs.store-name }}
         repo: ${{ inputs.repo }}
-        type: ${{ inputs.actionType }}
+        actionType: ${{ inputs.type }}
         body: ${{ inputs.body }}
         issueNumber: ${{ inputs.issueNumber }}
         commentId: ${{ inputs.commentId }}
