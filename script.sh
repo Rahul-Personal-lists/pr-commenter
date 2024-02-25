@@ -61,11 +61,12 @@ deleteComment() {
   fi
 
   # Delete the comment
- response=$(gh api \
-  --method DELETE \
+ curl -L \
+  -X DELETE \
   -H "Accept: application/vnd.github+json" \
+  -H "Authorization: Bearer <YOUR-TOKEN>" \
   -H "X-GitHub-Api-Version: 2022-11-28" \
-   repos/$repo/pulls/comments/1963068283)
+  https://api.github.com/repos/$repos/pulls/comments/$comment_Id
   
   echo "Deleted a comment. Comment ID: $comment_Id"
 }
