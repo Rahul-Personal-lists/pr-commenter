@@ -1,5 +1,7 @@
 #!/bin/bash
+# https://docs.github.com/en/rest/pulls/comments?apiVersion=2022-11-28
 
+commentId=''
 # Function to add reactions
 addReactions() {
   if [ -z "$reactions" ]; then
@@ -33,9 +35,9 @@ createComment() {
   
   echo "Created a comment on issue number: $issueNumber"
   echo "Create comment=$comment"
-  commentId=$(echo "$comment" | awk -F'/' '{print $NF}' | cut -d'-' -f2)
+  id=$(echo "$comment" | awk -F'/' '{print $NF}' | cut -d'-' -f2)
 
-  echo "Comment is modified. Comment ID: $commentId"
+  echo "Comment is modified. Comment ID: $id"
 
   addReactions
 }
@@ -66,6 +68,8 @@ if [ -n "$comment_body" ]; then
   echo "Comment found for a search term: '$searchTerm'."
   echo "Comment ID: '$commentId'."
 fi
+
+commentId
 
 }
 
@@ -101,6 +105,12 @@ esac
 
 echo "comment_id: $commentId"
 echo "comment_body: $commentBody"
+
+# These outputs are used in other steps/jobs via action.yml
+echo "comment_id=${commentId}" >> $GITHUB_OUTPUT
+
+
+# echo "theme_id=${THEME_IDS[@]}" >> $GITHUB_OUTPUT
 
 
 
