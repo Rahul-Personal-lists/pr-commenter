@@ -106,20 +106,12 @@ comments=$(gh api \
   -H "X-GitHub-Api-Version: 2022-11-28" \
   /repos/Rahul-Personal-lists/copy-giftree/issues/10/comments)
 
-echo "commentssssss=$comments"
-
 comment_body=$(echo "$comments" | jq -r '.[0].body')
 
 echo "CommentBody: $comment_body"
 
-
-# comment=$(echo "$comments" | jq -r '.[] | select('\
-#   "(\"$searchTerm\" | length > 0 and .body | index(\"$searchTerm\") >= 0) or " \
-#   "(\"$author\" | length > 0 and .user.login == \"$author\")" \
-# ')')
-
-if [ -n "$comment" ]; then
-  commentId=$(echo "$comment" | jq -r '.id')
+if [ -n "$comment_body" ]; then
+  commentId=$(echo "$comments" | jq -r '.[0].id')
   echo "Comment found for a search term: '$searchTerm'."
   echo "Comment ID: '$commentId'."
 fi
