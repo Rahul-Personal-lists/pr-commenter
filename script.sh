@@ -101,10 +101,16 @@ echo "issueNumber=$issueNumber"
   #     fi
   #   done
   # else
-comments=$(gh api \
+# comments=$(gh api \
+#   -H "Accept: application/vnd.github+json" \
+#   -H "X-GitHub-Api-Version: 2022-11-28" \
+#   /repos/Rahul-Personal-lists/copy-giftree/pulls/comments)
+comments=$(curl -L \
   -H "Accept: application/vnd.github+json" \
+  -H "Authorization: Bearer $GH_TOKEN" \
   -H "X-GitHub-Api-Version: 2022-11-28" \
-  /repos/Rahul-Personal-lists/copy-giftree/pulls/comments)
+  https://api.github.com/repos/Rahul-Personal-lists/copy-giftree/pulls/comments)
+
 #$(curl -s -H "Authorization: token $GH_TOKEN" "https://api.github.com/repos/$owner/copy-giftree/issues/$issueNumber/comments")
 echo "commentssssss=$comments"
 comment=$(echo "$comments" | jq -r '.[] | select('\
