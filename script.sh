@@ -101,8 +101,11 @@ echo "issueNumber=$issueNumber"
   #     fi
   #   done
   # else
-comments=$(curl -s -H "Authorization: token $GH_TOKEN" "https://api.github.com/repos/$owner/copy-giftree/issues")
-# /$issueNumber/comments")
+comments=$(gh api \
+  -H "Accept: application/vnd.github+json" \
+  -H "X-GitHub-Api-Version: 2022-11-28" \
+  /repos/$repo/pulls/comments)
+#$(curl -s -H "Authorization: token $GH_TOKEN" "https://api.github.com/repos/$owner/copy-giftree/issues/$issueNumber/comments")
 echo "commentssssss=$comments"
 comment=$(echo "$comments" | jq -r '.[] | select('\
   "(\"$searchTerm\" | length > 0 and .body | index(\"$searchTerm\") >= 0) or " \
