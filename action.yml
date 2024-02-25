@@ -37,6 +37,7 @@ inputs:
 outputs:
   comment_id:
     description: 'The id of the new comment'
+    value: ${{ steps.pr_comment.outputs.comment_id }}
   comment_body:
     description: 'The body of the new comment'
 
@@ -44,6 +45,7 @@ runs:
   using: "composite"
   steps:
     - name: Doing commenting
+      id: pr_comment
       env:
         GH_TOKEN: ${{ github.token }}
         owner: "Rahul-Personal-lists"
