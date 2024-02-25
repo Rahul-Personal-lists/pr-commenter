@@ -53,11 +53,11 @@ runs:
         token: ${{ inputs.token }}
         owner: ${{ inputs.store-name }}
         repo: ${{ inputs.repo }}
-        actionType: ${{ inputs.actionType }}
+        type: ${{ inputs.actionType }}
         body: ${{ inputs.body }}
         issueNumber: ${{ inputs.issueNumber }}
         commentId: ${{ inputs.commentId }}
-        searchTerm: ${{ inputs.searchTerm }}
+        searchTerm: ${{ inputs.search_term }}
         author: ${{ inputs.author }}
         direction: ${{ inputs.direction }}
         reactions: ${{ inputs.reactions }}
