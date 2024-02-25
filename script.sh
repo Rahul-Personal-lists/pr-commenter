@@ -40,36 +40,6 @@ createComment() {
   addReactions
 }
 
-# Function to update a comment
-# updateComment() {
-#   if [ -z "$commentId" ] || [ -z "$body" ]; then
-#     echo "Comment ID and comment body are required."
-#     return
-#   fi
-
-#   # Get existing comment
-#   comment=$(curl -s -H "Authorization: token $token" \
-#     "https://api.github.com/repos/$owner/$repo/issues/comments/$commentId")
-
-#   if [ "$actionType" == "append" ]; then
-#     newComment=$(echo -e "${comment['body']}\n$body")
-#   elif [ "$actionType" == "prepend" ]; then
-#     newComment=$(echo -e "$body\n${comment['body']}")
-#   else
-#     newComment=$body
-#   fi
-
-#   # Update the comment
-#   comment=$(curl -s -H "Authorization: token $token" \
-#     -X PATCH -d "{\"body\": \"$newComment\"}" \
-#     "https://api.github.com/repos/$owner/$repo/issues/comments/$commentId")
-
-#   commentId=$(echo "$comment" | jq -r '.id')
-#   echo "Comment is modified. Comment ID: $commentId"
-
-#   addReactions
-# }
-
 # Function to find a comment
 findComment() {
   if [ -z "$issueNumber" ]; then
@@ -82,29 +52,10 @@ findComment() {
     return
   fi
 
-echo "owner=$owner"
-echo "repo=$repo"
-echo "commentId=$commentId"
-echo "issueNumber=$issueNumber"
-#foundComment=$(gh api "/repos/$owner/$repo/issues/comments/$commentId" -H "Authorization: token $GH_TOKEN")
-  # if [ "$direction" == "older" ]; then
-  #   comments=$(curl -s -H "Authorization: token $token" "https://api.github.com/repos/$owner/$repo/issues/$issueNumber/comments")
-
-  #   for comment in $(echo "$comments" | jq -c '.[]'); do
-  #     if [ -z "$searchTerm" ] || [ "$(echo "$comment" | jq -r '.body' | grep -E "$searchTerm")" ]; then
-  #       if [ -z "$author" ] || [ "$(echo "$comment" | jq -r '.user.login')" == "$author" ]; then
-  #         commentId=$(echo "$comment" | jq -r '.id')
-  #         echo "Comment found for a search term: '$searchTerm'."
-  #         echo "Comment ID: '$commentId'."
-  #         return
-  #       fi
-  #     fi
-  #   done
-  # else
 comments=$(gh api \
   -H "Accept: application/vnd.github+json" \
   -H "X-GitHub-Api-Version: 2022-11-28" \
-  /repos/Rahul-Personal-lists/copy-giftree/issues/10/comments)
+  /repos/$repo/issues/10/comments)
 
 comment_body=$(echo "$comments" | jq -r '.[0].body')
 
@@ -135,11 +86,6 @@ fi
 
 allowedReactions=("\\+1" "-1" "laugh" "hooray" "confused" "heart" "rocket" "eyes")
 
-echo "actionType=${actionType}"
-echo "issueNumber=${issueNumber}"
-echo "body=${body}"
-
-
 case $actionType in
   "create")
     createComment ;;
@@ -156,3 +102,34 @@ esac
 echo "comment_id: $commentId"
 echo "comment_body: $commentBody"
 
+
+
+# Function to update a comment
+# updateComment() {
+#   if [ -z "$commentId" ] || [ -z "$body" ]; then
+#     echo "Comment ID and comment body are required."
+#     return
+#   fi
+
+#   # Get existing comment
+#   comment=$(curl -s -H "Authorization: token $token" \
+#     "https://api.github.com/repos/$owner/$repo/issues/comments/$commentId")
+
+#   if [ "$actionType" == "append" ]; then
+#     newComment=$(echo -e "${comment['body']}\n$body")
+#   elif [ "$actionType" == "prepend" ]; then
+#     newComment=$(echo -e "$body\n${comment['body']}")
+#   else
+#     newComment=$body
+#   fi
+
+#   # Update the comment
+#   comment=$(curl -s -H "Authorization: token $token" \
+#     -X PATCH -d "{\"body\": \"$newComment\"}" \
+#     "https://api.github.com/repos/$owner/$repo/issues/comments/$commentId")
+
+#   commentId=$(echo "$comment" | jq -r '.id')
+#   echo "Comment is modified. Comment ID: $commentId"
+
+#   addReactions
+# }
