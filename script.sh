@@ -70,6 +70,8 @@ deleteComment() {
   echo "Deleted a comment. Comment ID: $commentId"
 }
 
+# Debug statement
+echo "Debug: commentId before findComment: '$commentId'"
 
 case $actionType in
   "create")
@@ -83,6 +85,9 @@ case $actionType in
   *)
     echo "Invalid action type: $actionType" ;;
 esac
+
+# Debug statement
+echo "Debug: commentId after findComment: '$commentId'"
 
 # These outputs are used in other steps/jobs via action.yml
 echo "comment_id=${commentId}" >> $GITHUB_OUTPUT
