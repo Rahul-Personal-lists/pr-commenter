@@ -1,36 +1,35 @@
 #!/bin/bash
 # https://docs.github.com/en/rest/pulls/comments?apiVersion=2022-11-28
 
-commentId=
+comment_id=
 
 # Function to create a comment
 createComment() {
-  if [ -z "$issueNumber" ] || [ -z "$body" ]; then
+  if [ -z "$ISSUE_NUMBER" ] || [ -z "$BODY" ]; then
     echo "Issue number and comment body are required."
     return
   fi
 
   # Create a comment
-  gh pr comment $issueNumber --body "$body"
+  gh pr comment "$ISSUE_NUMBER" --body "$BODY"
   status=$?
 
-  if [ $status -ne 0 ]; then
+  if [ "$status" -ne 0 ]; then
     echo "Failed to create a comment. Exit code: $status"
     return
   fi
 
-  echo "Created a comment on issue number: $issueNumber"
+  echo "Created a comment on issue number: $ISSUE_NUMBER"
 }
-
 
 # Function to find a comment
 findComment() {
-  if [ -z "$issueNumber" ]; then
+  if [ -z "$ISSUE_NUMBER" ]; then
     echo "Issue number is required."
     return
   fi
 
-  if [ -z "$searchTerm" ] && [ -z "$author" ]; then
+  if [ -z "$SEARCH_TERM" ] && [ -z "$AUTHOR" ]; then
     echo "Either search term or comment author is required."
     return
   fi
@@ -38,11 +37,12 @@ findComment() {
   comments=$(gh api \
     -H "Accept: application/vnd.github+json" \
     -H "X-GitHub-Api-Version: 2022-11-28" \
-    /repos/$repo/issues/$issueNumber/comments)
+    "/repos/$REPO/issues/$ISSUE_NUMBER/comments"
+  )
 
   status=$?
 
-  if [ $status -ne 0 ]; then
+  if [ "$status" -ne 0 ]; then
     echo "Failed to retrieve comments. Exit code: $status"
     return
   fi
@@ -52,41 +52,39 @@ findComment() {
   echo "CommentBody: $comment_body"
 
   if [ -n "$comment_body" ]; then
-    commentId=$(echo "$comments" | jq -r '.[0].id')
-    echo "Comment found for a search term: '$searchTerm'."
-    echo "Comment ID: '$commentId'."
+    comment_id=$(echo "$comments" | jq -r '.[0].id')
+    echo "Comment found for a search term: '$SEARCH_TERM'."
+    echo "Comment ID: '$comment_id'."
   else
     echo "No comment found for the given criteria."
   fi
 }
 
-
 # Function to delete a comment
 deleteComment() {
-  echo "hello delete"
-  if [ -z "$comment_Id" ]; then
+  if [ -z "$COMMENT_ID" ]; then
     echo "Comment ID is required."
     return
   fi
 
   # Delete the comment
-   gh api \
-  --method DELETE \
-  -H "Accept: application/vnd.github+json" \
-  -H "X-GitHub-Api-Version: 2022-11-28" \
-  /repos/${repo}/issues/comments/${comment_Id}
-
+  gh api \
+    --method DELETE \
+    -H "Accept: application/vnd.github+json" \
+    -H "X-GitHub-Api-Version: 2022-11-28" \
+    "/repos/$REPO/issues/comments/$COMMENT_ID"
+  
   STATUS=$?
 
   if [ "$STATUS" -ne 0 ]; then
     echo "Failing deployment"
-    exit $STATUS1
+    exit $STATUS
   else
-    echo "Deleted a comment. Comment ID: $comment_Id"   
-  fi 
+    echo "Deleted a comment. Comment ID: $COMMENT_ID"
+  fi
 }
 
-case $actionType in
+case $ACTION_TYPE in
   "create")
     createComment ;;
   "update" | "append" | "prepend")
@@ -96,8 +94,8 @@ case $actionType in
   "delete")
     deleteComment ;;
   *)
-    echo "Invalid action type: $actionType" ;;
+    echo "Invalid action type: $ACTION_TYPE" ;;
 esac
 
 # These outputs are used in other steps/jobs via action.yml
-echo "comment_id=${commentId}" >> $GITHUB_OUTPUT
+echo "comment_id=${comment_id}" >> "$GITHUB_OUTPUT"
