@@ -60,9 +60,10 @@ deleteComment() {
     return
   fi
 
+ #--method DELETE \
   # Delete the comment
    response=$(gh api \
-  --method DELETE \
+
   -H "Accept: application/vnd.github+json" \
   -H "X-GitHub-Api-Version: 2022-11-28" \
   /repos/Rahul-Personal-lists/copy-giftree/pulls/comments)
