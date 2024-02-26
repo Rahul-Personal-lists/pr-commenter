@@ -4,6 +4,9 @@ inputs:
   token:
     description: 'GitHub token'
     required: true
+  job_status:  
+    description: Status of previous jobs 
+    required: true
   repository:
     description: 'The GitHub repository'
     default: ${{ github.repository }}
@@ -45,6 +48,7 @@ runs:
   using: "composite"
   steps:
     - name: Create a comment
+      if: ${{ inputs.job_status != 'success' }}
       id: create_comment
       env:
         GH_TOKEN: ${{ inputs.token }}
@@ -58,6 +62,7 @@ runs:
       shell: bash
         
     - name: Find a comment
+      if: ${{ inputs.job_status != 'failure' }}
       id: find_comment
       env:
         GH_TOKEN: ${{ inputs.token }}
