@@ -55,17 +55,15 @@ deleteComment() {
   fi
 
   # Delete the comment
-  response=$(gh api \
+   gh api \
   --method DELETE \
   -H "Accept: application/vnd.github+json" \
   -H "X-GitHub-Api-Version: 2022-11-28" \
-  /repos/${repo}/issues/comments/${comment_Id})
+  /repos/${repo}/issues/comments/${comment_Id}
 
-  http_status_code=$(echo "$response" | tail -n1)  # Extracting the last line, which contains the HTTP status code
-  echo "response=$response"
+  http_status_code=$?
+
   echo "HTTP status code=$http_status_code"
-
-  echo "respone=$response"
   
   # if [ $STATUS1 != 0 ]; then 
   #   echo "Failing deployment"
