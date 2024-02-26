@@ -9,17 +9,12 @@ createComment() {
     echo "Issue number and comment body are required."
     return
   fi
-
 # Create a comment
   comment=$(gh pr comment $issueNumber --body "$body")
   
   echo "Created a comment on issue number: $issueNumber"
   echo "Create comment=$comment"
   id=$(echo "$comment" | awk -F'/' '{print $NF}' | cut -d'-' -f2)
-
-  echo "Comment is modified. Comment ID: $id"
-
-  addReactions
 }
 
 # Function to find a comment
@@ -51,7 +46,7 @@ fi
 
 }
 
-#Function to delete a comment
+# Function to delete a comment
 deleteComment() {
   echo "hello delete"
   if [ -z "$comment_Id" ]; then
@@ -65,15 +60,10 @@ deleteComment() {
   -H "Accept: application/vnd.github+json" \
   -H "X-GitHub-Api-Version: 2022-11-28" \
   /repos/${repo}/issues/comments/${comment_Id})
-  
-  #/repos/Rahul-Personal-lists/copy-giftree/pulls/10/comments/1963068283)
-  
-  # response=$(curl -L \
-  # -X DELETE \
-  # -H "Accept: application/vnd.github+json" \
-  # -H "Authorization: Bearer $GH_TOKEN" \
-  # -H "X-GitHub-Api-Version: 2022-11-28" \
-  #  https://api.github.com/repos/${repo}/issues/comments/1963068283)
+
+  http_status_code=$(echo "$response" | tail -n1)  # Extracting the last line, which contains the HTTP status code
+  echo "response=$response"
+  echo "HTTP status code=$http_status_code"
 
   echo "respone=$response"
   
@@ -84,9 +74,6 @@ deleteComment() {
   #   echo "Deleted a comment. Comment ID: $comment_Id"   
   # fi 
 }
-
-# Debug statement
-echo "Debug: commentId before findComment: '$commentId'"
 
 case $actionType in
   "create")
@@ -101,43 +88,5 @@ case $actionType in
     echo "Invalid action type: $actionType" ;;
 esac
 
-# Debug statement
-echo "Debug: commentId after findComment: '$commentId'"
-
 # These outputs are used in other steps/jobs via action.yml
 echo "comment_id=${commentId}" >> $GITHUB_OUTPUT
-
-
-# echo "theme_id=${THEME_IDS[@]}" >> $GITHUB_OUTPUT
-
-
-
-# Function to update a comment
-# updateComment() {
-#   if [ -z "$commentId" ] || [ -z "$body" ]; then
-#     echo "Comment ID and comment body are required."
-#     return
-#   fi
-
-#   # Get existing comment
-#   comment=$(curl -s -H "Authorization: token $token" \
-#     "https://api.github.com/repos/$owner/$repo/issues/comments/$commentId")
-
-#   if [ "$actionType" == "append" ]; then
-#     newComment=$(echo -e "${comment['body']}\n$body")
-#   elif [ "$actionType" == "prepend" ]; then
-#     newComment=$(echo -e "$body\n${comment['body']}")
-#   else
-#     newComment=$body
-#   fi
-
-#   # Update the comment
-#   comment=$(curl -s -H "Authorization: token $token" \
-#     -X PATCH -d "{\"body\": \"$newComment\"}" \
-#     "https://api.github.com/repos/$owner/$repo/issues/comments/$commentId")
-
-#   commentId=$(echo "$comment" | jq -r '.id')
-#   echo "Comment is modified. Comment ID: $commentId"
-
-#   addReactions
-# }
