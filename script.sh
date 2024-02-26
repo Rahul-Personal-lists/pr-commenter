@@ -71,8 +71,8 @@ echo "======= Running find comment ======="
 }
 
 # Function to delete a comment
-echo "======= Running delete comment ======="
 deleteComment() {
+echo "======= Running delete comment ======="
   if [ -z "$COMMENT_ID" ]; then
     echo "Comment ID is required."
     return
