@@ -34,27 +34,61 @@ inputs:
     description: 'Add comma separated list of reactions to react on the comment.'
     required: false
 
-outputs:
-  comment_id:
-    description: 'The id of the new comment'
-    value: ${{ steps.pr_comment.outputs.comment_id }}
-  comment_body:
-    description: 'The body of the new comment'
+# outputs:
+#   comment_id:
+#     description: 'The id of the new comment'
+#     value: ${{ steps.pr_comment.outputs.comment_id }}
+#   comment_body:
+#     description: 'The body of the new comment'
 
 runs:
   using: "composite"
   steps:
-    - name: Doing commenting
-      id: pr_comment
+    # - name: Doing commenting
+    #   id: pr_comment
+    #   env:
+    #     GH_TOKEN: ${{ inputs.token }}
+    #     REPO: ${{ inputs.repository }}
+    #     ACTION_TYPE: ${{ inputs.type }}
+    #     BODY: ${{ inputs.body }}
+    #     ISSUE_NUMBER: ${{ inputs.number }}
+    #     COMMENT_ID: ${{ inputs.comment_id }}
+    #     SEARCH_TERM: ${{ inputs.search_term }}
+    #     AUTHOR: ${{ inputs.author }}
+    #   run: |
+    #     ${{ github.action_path }}/script.sh 
+    #   shell: bash
+
+    - name: Create a comment
+      id: create_comment
       env:
         GH_TOKEN: ${{ inputs.token }}
         REPO: ${{ inputs.repository }}
-        ACTION_TYPE: ${{ inputs.type }}
+        ACTION_TYPE: "create"
         BODY: ${{ inputs.body }}
         ISSUE_NUMBER: ${{ inputs.number }}
         COMMENT_ID: ${{ inputs.comment_id }}
-        SEARCH_TERM: ${{ inputs.search_term }}
         AUTHOR: ${{ inputs.author }}
       run: |
         ${{ github.action_path }}/script.sh 
       shell: bash
+        
+    # - name: find a comment 
+    #   if: ${{ needs.set-variables.result != 'success' }}
+    #   uses: Rahul-Personal-lists/pr-commenter@main
+    #   id: find_comment
+    #   with:
+    #     token: ${{ secrets.GITHUB_TOKEN }}
+    #     type: "find"
+    #     body: "To check the delete action1"
+    #     number: ${{ github.event.pull_request.number }}
+    #     search_term: "To check the delete action"  
+          
+    # - name: Delete a comment.
+    #   uses: Rahul-Personal-lists/pr-commenter@main
+    #   id: delete_comment
+    #   if: ${{ steps.find_comment.outputs.comment_id != '' }}
+    #   with:
+    #     token: ${{ secrets.GITHUB_TOKEN }}
+    #     type: "delete"
+    #     comment_id: ${{ steps.find_comment.outputs.comment_id }}  
