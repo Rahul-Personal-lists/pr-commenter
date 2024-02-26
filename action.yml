@@ -47,7 +47,7 @@ runs:
     - name: Doing commenting
       id: pr_comment
       env:
-        GH_TOKEN: ${{ github.token }}
+        GH_TOKEN: ${{ inputs.token }}
         owner: "Rahul-Personal-lists"
         repo: ${{ inputs.repository }}
         actionType: ${{ inputs.type }}
