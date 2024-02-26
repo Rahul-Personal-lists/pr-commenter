@@ -47,6 +47,7 @@ runs:
     - name: Doing commenting
       id: pr_comment
       env:
+        GH_TOKEN: ${{ inputs.token }}
         REPO: ${{ inputs.repository }}
         ACTION_TYPE: ${{ inputs.type }}
         BODY: ${{ inputs.body }}
