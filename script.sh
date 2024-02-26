@@ -20,7 +20,6 @@ createComment() {
   fi
 
   echo "Created a comment on issue number: $issueNumber"
-  echo "Create comment exit code: $status"
 }
 
 
@@ -36,22 +35,31 @@ findComment() {
     return
   fi
 
-comments=$(gh api \
-  -H "Accept: application/vnd.github+json" \
-  -H "X-GitHub-Api-Version: 2022-11-28" \
-  /repos/$repo/issues/10/comments)
+  comments=$(gh api \
+    -H "Accept: application/vnd.github+json" \
+    -H "X-GitHub-Api-Version: 2022-11-28" \
+    /repos/$repo/issues/$issueNumber/comments)
 
-comment_body=$(echo "$comments" | jq -r '.[0].body')
+  status=$?
 
-echo "CommentBody: $comment_body"
+  if [ $status -ne 0 ]; then
+    echo "Failed to retrieve comments. Exit code: $status"
+    return
+  fi
 
-if [ -n "$comment_body" ]; then
-  commentId=$(echo "$comments" | jq -r '.[0].id')
-  echo "Comment found for a search term: '$searchTerm'."
-  echo "Comment ID: '$commentId'."
-fi
+  comment_body=$(echo "$comments" | jq -r '.[0].body')
 
+  echo "CommentBody: $comment_body"
+
+  if [ -n "$comment_body" ]; then
+    commentId=$(echo "$comments" | jq -r '.[0].id')
+    echo "Comment found for a search term: '$searchTerm'."
+    echo "Comment ID: '$commentId'."
+  else
+    echo "No comment found for the given criteria."
+  fi
 }
+
 
 # Function to delete a comment
 deleteComment() {
