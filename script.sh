@@ -64,8 +64,8 @@ deleteComment() {
    response=$(gh api \
   -H "Accept: application/vnd.github+json" \
   -H "X-GitHub-Api-Version: 2022-11-28" \
-  /repos/$repo/issues/10/comments)
-  # repos/Rahul-Personal-lists/copy-giftree/pulls/10/comments/)
+  /repos/$repo/issues/10/comments/1963068283)
+  # repos/Rahul-Personal-lists/copy-giftree/pulls/10/comments/1963068283)
   
   #/repos/Rahul-Personal-lists/copy-giftree/pulls/10/comments/1963068283)
   
