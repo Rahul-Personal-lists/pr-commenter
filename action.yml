@@ -44,21 +44,6 @@ inputs:
 runs:
   using: "composite"
   steps:
-    # - name: Doing commenting
-    #   id: pr_comment
-    #   env:
-    #     GH_TOKEN: ${{ inputs.token }}
-    #     REPO: ${{ inputs.repository }}
-    #     ACTION_TYPE: ${{ inputs.type }}
-    #     BODY: ${{ inputs.body }}
-    #     ISSUE_NUMBER: ${{ inputs.number }}
-    #     COMMENT_ID: ${{ inputs.comment_id }}
-    #     SEARCH_TERM: ${{ inputs.search_term }}
-    #     AUTHOR: ${{ inputs.author }}
-    #   run: |
-    #     ${{ github.action_path }}/script.sh 
-    #   shell: bash
-
     - name: Create a comment
       id: create_comment
       env:
@@ -87,17 +72,17 @@ runs:
         ${{ github.action_path }}/script.sh 
       shell: bash
           
-    - name: Delete a comment
-      if: ${{ steps.find_comment.outputs.comment_id != '' }}
-      id: delete_comment
-      env:
-        GH_TOKEN: ${{ inputs.token }}
-        REPO: ${{ inputs.repository }}
-        ACTION_TYPE: "delete"
-        BODY: ${{ inputs.body }}
-        ISSUE_NUMBER: ${{ inputs.number }}
-        AUTHOR: ${{ inputs.author }}
-        COMMENT_ID: ${{ steps.find_comment.outputs.comment_id }} 
-      run: |
-        ${{ github.action_path }}/script.sh 
-      shell: bash
+    # - name: Delete a comment
+    #   if: ${{ steps.find_comment.outputs.comment_id != '' }}
+    #   id: delete_comment
+    #   env:
+    #     GH_TOKEN: ${{ inputs.token }}
+    #     REPO: ${{ inputs.repository }}
+    #     ACTION_TYPE: "delete"
+    #     BODY: ${{ inputs.body }}
+    #     ISSUE_NUMBER: ${{ inputs.number }}
+    #     AUTHOR: ${{ inputs.author }}
+    #     COMMENT_ID: ${{ steps.find_comment.outputs.comment_id }} 
+    #   run: |
+    #     ${{ github.action_path }}/script.sh 
+    #   shell: bash
