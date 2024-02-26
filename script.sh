@@ -61,25 +61,21 @@ deleteComment() {
   fi
 
   # Delete the comment
-response=$(curl -L \
+  response=$(curl -L \
   -X DELETE \
   -H "Accept: application/vnd.github+json" \
   -H "Authorization: Bearer $GH_TOKEN" \
   -H "X-GitHub-Api-Version: 2022-11-28" \
-  -w "%{http_code}" \
-  https://api.github.com/repos/Rahul-Personal-lists/copy-giftree/pulls/comments/1963068283)
+  https://api.github.com/repos/Rahul-Personal-lists/copy-giftree/pulls/comments/1963068283) ; STATUS1=$?
 
-http_status_code=$(echo "$response" | tail -n1)  # Extracting the last line, which contains the HTTP status code
-
-echo "response=$response"
-echo "HTTP status code=$http_status_code"
+  echo "respone=$response"
   
-  if [ $STATUS1 != 0 ]; then 
-    echo "Failing deployment"
-    exit $STATUS1
-  else
-    echo "Deleted a comment. Comment ID: $comment_Id"   
-  fi 
+  # if [ $STATUS1 != 0 ]; then 
+  #   echo "Failing deployment"
+  #   exit $STATUS1
+  # else
+  #   echo "Deleted a comment. Comment ID: $comment_Id"   
+  # fi 
 }
 
 # Debug statement
