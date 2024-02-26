@@ -13,13 +13,13 @@ createComment() {
   existing_comments=$(gh pr view "$ISSUE_NUMBER" --json comments -q '.comments[].body')
 
   # Check if the new comment body already exists
-  if echo "$existing_comments" | grep -q "$BODY"; then
+  if echo "$existing_comments" | grep -q "@$AUTHOR $BODY"; then
     echo "Comment already exists. Not creating again."
     return
   fi
 
   # Create a comment
-  gh pr comment "$ISSUE_NUMBER" --body "$BODY"
+  gh pr comment "$ISSUE_NUMBER" --body "@$AUTHOR $BODY"
   status=$?
 
   if [ "$status" -ne 0 ]; then
