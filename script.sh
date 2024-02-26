@@ -10,8 +10,7 @@ createComment() {
     return
   fi
 
-  # Create a comment
-
+# Create a comment
   comment=$(gh pr comment $issueNumber --body "$body")
   
   echo "Created a comment on issue number: $issueNumber"
@@ -65,7 +64,8 @@ deleteComment() {
    response=$(gh api \
   -H "Accept: application/vnd.github+json" \
   -H "X-GitHub-Api-Version: 2022-11-28" \
-  repos/Rahul-Personal-lists/copy-giftree/pulls/10/comments)
+  /repos/$repo/issues/10/comment)
+  # repos/Rahul-Personal-lists/copy-giftree/pulls/10/comments/)
   
   #/repos/Rahul-Personal-lists/copy-giftree/pulls/10/comments/1963068283)
   
