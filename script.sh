@@ -61,15 +61,19 @@ deleteComment() {
   fi
 
   # Delete the comment
- curl -L \
+  curl -L \
   -X DELETE \
   -H "Accept: application/vnd.github+json" \
   -H "Authorization: Bearer $GH_TOKEN" \
   -H "X-GitHub-Api-Version: 2022-11-28" \
-  https://api.github.com/repos/Rahul-Personal-lists/copy-giftree/pulls/comments/1963068283
-  # https://api.github.com/repos/$repos/pulls/comments/$comment_Id
+  https://api.github.com/repos/Rahul-Personal-lists/copy-giftree/pulls/comments/1963068283 ; STATUS1=$?
   
-  echo "Deleted a comment. Comment ID: $comment_Id"
+  if [ $STATUS1 != 0 ]; then 
+    echo "Failing deployment"
+    exit $STATUS1
+  else
+    echo "Deleted a comment. Comment ID: $comment_Id"   
+  fi 
 }
 
 # Debug statement
