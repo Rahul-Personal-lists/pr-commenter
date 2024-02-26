@@ -4,6 +4,7 @@
 comment_id=
 
 createComment() {
+echo "======= Running create comment ======="
   if [ -z "$ISSUE_NUMBER" ] || [ -z "$BODY" ]; then
     echo "Issue number and comment body are required."
     return
@@ -32,6 +33,7 @@ createComment() {
 
 # Function to find a comment
 findComment() {
+echo "======= Running find comment ======="
   if [ -z "$ISSUE_NUMBER" ]; then
     echo "Issue number is required."
     return
@@ -69,6 +71,7 @@ findComment() {
 }
 
 # Function to delete a comment
+echo "======= Running delete comment ======="
 deleteComment() {
   if [ -z "$COMMENT_ID" ]; then
     echo "Comment ID is required."
