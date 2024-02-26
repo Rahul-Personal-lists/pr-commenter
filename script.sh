@@ -63,9 +63,9 @@ deleteComment() {
 
   STATUS=$?
 
-  echo "HTTP status code=$http_status_code"
+  echo "Status code=$STATUS"
   
-  if [ "$STATUS1" -ne 0 ]; then
+  if [ "$STATUS" -ne 0 ]; then
     echo "Failing deployment"
     exit $STATUS1
   else
