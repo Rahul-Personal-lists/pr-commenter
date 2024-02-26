@@ -59,18 +59,18 @@ deleteComment() {
   --method DELETE \
   -H "Accept: application/vnd.github+json" \
   -H "X-GitHub-Api-Version: 2022-11-28" \
-  /repos/${repo}/issues/comment/${comment_Id}
+  /repos/${repo}/issues/comments/${comment_Id}
 
-  http_status_code=$?
+  STATUS=$?
 
   echo "HTTP status code=$http_status_code"
   
-  # if [ $STATUS1 != 0 ]; then 
-  #   echo "Failing deployment"
-  #   exit $STATUS1
-  # else
-  #   echo "Deleted a comment. Comment ID: $comment_Id"   
-  # fi 
+  if [ "$STATUS1" -ne 0 ]; then
+    echo "Failing deployment"
+    exit $STATUS1
+  else
+    echo "Deleted a comment. Comment ID: $comment_Id"   
+  fi 
 }
 
 case $actionType in
