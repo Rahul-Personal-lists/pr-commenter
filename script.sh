@@ -9,13 +9,20 @@ createComment() {
     echo "Issue number and comment body are required."
     return
   fi
-# Create a comment
-  comment=$(gh pr comment $issueNumber --body "$body")
-  
+
+  # Create a comment
+  gh pr comment $issueNumber --body "$body"
+  status=$?
+
+  if [ $status -ne 0 ]; then
+    echo "Failed to create a comment. Exit code: $status"
+    return
+  fi
+
   echo "Created a comment on issue number: $issueNumber"
-  echo "Create comment=$comment"
-  id=$(echo "$comment" | awk -F'/' '{print $NF}' | cut -d'-' -f2)
+  echo "Create comment exit code: $status"
 }
+
 
 # Function to find a comment
 findComment() {
@@ -63,8 +70,6 @@ deleteComment() {
 
   STATUS=$?
 
-  echo "Status code=$STATUS"
-  
   if [ "$STATUS" -ne 0 ]; then
     echo "Failing deployment"
     exit $STATUS1
