@@ -87,11 +87,16 @@ runs:
         ${{ github.action_path }}/script.sh 
       shell: bash
           
-    # - name: Delete a comment.
-    #   uses: Rahul-Personal-lists/pr-commenter@main
-    #   id: delete_comment
-    #   if: ${{ steps.find_comment.outputs.comment_id != '' }}
-    #   with:
-    #     token: ${{ secrets.GITHUB_TOKEN }}
-    #     type: "delete"
-    #     comment_id: ${{ steps.find_comment.outputs.comment_id }}  
+    - name: Delete a comment
+      id: delete_comment
+      env:
+        GH_TOKEN: ${{ inputs.token }}
+        REPO: ${{ inputs.repository }}
+        ACTION_TYPE: "delete"
+        BODY: ${{ inputs.body }}
+        ISSUE_NUMBER: ${{ inputs.number }}
+        AUTHOR: ${{ inputs.author }}
+      if: ${{ steps.find_comment.outputs.comment_id != '' }}
+      run: |
+        ${{ github.action_path }}/script.sh 
+      shell: bash
