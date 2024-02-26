@@ -67,22 +67,25 @@ runs:
         ACTION_TYPE: "create"
         BODY: ${{ inputs.body }}
         ISSUE_NUMBER: ${{ inputs.number }}
-        COMMENT_ID: ${{ inputs.comment_id }}
         AUTHOR: ${{ inputs.author }}
       run: |
         ${{ github.action_path }}/script.sh 
       shell: bash
         
-    # - name: find a comment 
-    #   if: ${{ needs.set-variables.result != 'success' }}
-    #   uses: Rahul-Personal-lists/pr-commenter@main
-    #   id: find_comment
-    #   with:
-    #     token: ${{ secrets.GITHUB_TOKEN }}
-    #     type: "find"
-    #     body: "To check the delete action1"
-    #     number: ${{ github.event.pull_request.number }}
-    #     search_term: "To check the delete action"  
+    - name: Find a comment
+      id: find_comment
+      env:
+        GH_TOKEN: ${{ inputs.token }}
+        REPO: ${{ inputs.repository }}
+        ACTION_TYPE: "find"
+        BODY: ${{ inputs.body }}
+        ISSUE_NUMBER: ${{ inputs.number }}
+        COMMENT_ID: ${{ inputs.comment_id }}
+        SEARCH_TERM: ${{ inputs.body }}
+        AUTHOR: ${{ inputs.author }}
+      run: |
+        ${{ github.action_path }}/script.sh 
+      shell: bash
           
     # - name: Delete a comment.
     #   uses: Rahul-Personal-lists/pr-commenter@main
