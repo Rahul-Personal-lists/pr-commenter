@@ -88,6 +88,7 @@ runs:
       shell: bash
           
     - name: Delete a comment
+      if: ${{ steps.find_comment.outputs.comment_id != '' }}
       id: delete_comment
       env:
         GH_TOKEN: ${{ inputs.token }}
@@ -96,7 +97,7 @@ runs:
         BODY: ${{ inputs.body }}
         ISSUE_NUMBER: ${{ inputs.number }}
         AUTHOR: ${{ inputs.author }}
-      if: ${{ steps.find_comment.outputs.comment_id != '' }}
+        COMMENT_ID: ${{ steps.find_comment.outputs.comment_id }} 
       run: |
         ${{ github.action_path }}/script.sh 
       shell: bash
