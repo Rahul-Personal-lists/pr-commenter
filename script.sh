@@ -66,7 +66,7 @@ deleteComment() {
   -H "Accept: application/vnd.github+json" \
   -H "Authorization: Bearer $GH_TOKEN" \
   -H "X-GitHub-Api-Version: 2022-11-28" \
-  https://api.github.com/repos/Rahul-Personal-lists/copy-giftree/pull/10#issuecomment-1963068283
+  https://api.github.com/repos/Rahul-Personal-lists/copy-giftree/pull/10/comments/1963068283
   # https://api.github.com/repos/$repos/pulls/comments/$comment_Id
   
   echo "Deleted a comment. Comment ID: $comment_Id"
