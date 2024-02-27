@@ -78,7 +78,7 @@ runs:
       shell: bash
           
     - name: Delete a comment
-      if: ${{ steps.find_comment.result != 'failure' }}
+      if: ${{ steps.find_comment.result != 'skipped' }}
       id: delete_comment
       env:
         GH_TOKEN: ${{ inputs.token }}
