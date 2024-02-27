@@ -76,7 +76,10 @@ runs:
       run: |
         ${{ github.action_path }}/script.sh 
       shell: bash
-          
+
+    - name: Debug
+      run: echo ${{ steps.find_comment.result }}
+      
     - name: Delete a comment
       if: ${{ steps.find_comment.result != 'skipped' }}
       id: delete_comment
